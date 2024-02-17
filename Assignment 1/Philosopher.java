@@ -6,7 +6,8 @@ class Philosopher extends Thread {
   private int thinkCount;
   private int numCycles;
   private int thinkingTime;
-  private int eatingTime;
+  private int eatingTime; // Max eating time
+  private int currentEatingTime;  // Current eating time
   private int handChoice;
   private int id;
 
@@ -30,12 +31,18 @@ class Philosopher extends Thread {
           if (thinkCount % 10 == 0)
             System.out.println("Philosopher " + this.id + " has thought " + thinkCount + " times");
           Thread.sleep(random.nextInt(thinkingTime));   // Think for a while
-          synchronized(this.right) {                    // Grab right chopstick 
+          synchronized(this.right) 
+          {                    // Grab right chopstick 
             System.out.println("Philosopher " + this.id + "has the right chopstick");
-            synchronized(this.left) {                   // Grab left chopstick 
+            synchronized(this.left) 
+            {                   // Grab left chopstick 
               System.out.println("Philosopher " + this.id + "wants the left chopstick");
-              Thread.sleep(random.nextInt(eatingTime)); // Eat for a while
+              this.currentEatingTime = random.nextInt(eatingTime);
+              Thread.sleep(currentEatingTime); // Eat for a while
+              System.out.println("Philosopher " + this.id + " eats for " + currentEatingTime + "ms");
+              System.out.println("Philosopher " + this.id + " releases the left chopstick");
             }
+            System.out.println("Philosopher " + this.id + " releases the right chopstick");
           }
         }
       }
@@ -49,26 +56,36 @@ class Philosopher extends Thread {
           Thread.sleep(random.nextInt(thinkingTime));     // Think for a while
           if (this.id % 2 == 0) 
           {
-            synchronized(right) 
-            {                         // Grab right chopstick 
+            synchronized(right)   // Grab right chopstick  
+            {                         
               System.out.println("Philosopher " + this.id + " has the right chopstick");
-              synchronized(left) 
-              {                        // Grab left chopstick 
-                System.out.println("Philosopher " + this.id + " wants the left chopstick");
-                Thread.sleep(random.nextInt(eatingTime)); // Eat for a while
+              System.out.println("Philosopher " + this.id + " wants the left chopstick");
+              synchronized(left)  // Grab left chopstick 
+              {                        
+                System.out.println("Philosopher " + this.id + " has the left chopstick");
+                this.currentEatingTime = random.nextInt(eatingTime);
+                Thread.sleep(currentEatingTime); // Eat for a while
+                System.out.println("Philosopher " + this.id + " eats for " + currentEatingTime + "ms");
+                System.out.println("Philosopher " + this.id + " releases the left chopstick");
               }
+              System.out.println("Philosopher " + this.id + " releases the right chopstick");
             }
           }
           else
           {
-            synchronized(left) 
-            {                          // Grab left chopstick 
+            synchronized(left)    // Grab left chopstick 
+            {                          
               System.out.println("Philosopher " + this.id + " has the left chopstick");
-              synchronized(right) 
-              {                       // Grab right chopstick 
-                System.out.println("Philosopher " + this.id + " wants the right chopstick");
-                Thread.sleep(random.nextInt(eatingTime)); // Eat for a while
+              System.out.println("Philosopher " + this.id + " wants the right chopstick");
+              synchronized(right) // Grab right chopstick 
+              {                       
+                System.out.println("Philosopher " + this.id + " has the right chopstick");
+                this.currentEatingTime = random.nextInt(eatingTime);
+                Thread.sleep(currentEatingTime); // Eat for a while
+                System.out.println("Philosopher " + this.id + " eats for " + currentEatingTime + "ms");
+                System.out.println("Philosopher " + this.id + " releases the right chopstick");
               }
+              System.out.println("Philosopher " + this.id + " releases the left chopstick");
             }
           }
         }
