@@ -3,7 +3,7 @@ import java.util.Random;
 class Philosopher extends Thread {
   private Chopstick left, right;
   private Random random;
-  private int thinkCount;
+  private int thinkCount = 0;
   private int numCycles;
   private int thinkingTime;         // Max thinking time
   private int currentThinkingTime;  // Current thinking time
@@ -26,6 +26,7 @@ class Philosopher extends Thread {
     try {
       if (handChoice == 0)  // all philosphers are right-handed
       {
+        if(numCycles == 0){--thinkCount;} // if numCycles = 0, run infinitely
         while(thinkCount < numCycles) 
         {
           ++thinkCount;
@@ -49,10 +50,12 @@ class Philosopher extends Thread {
             }
             System.out.println("Philosopher " + this.id + " releases the right chopstick");
           }
+          if(thinkCount == 0){--thinkCount;}  // if numCycles = 0, run infinitely
         }
       }
       else if (handChoice == 1) // all even-numbered philosphers are right-handed, all odd-numbered are left-handed
       {
+        if(numCycles == 0){--thinkCount;} // if numCycles = 0, run infinitely
         while(thinkCount < numCycles) 
         {
           ++thinkCount;
@@ -97,6 +100,7 @@ class Philosopher extends Thread {
               System.out.println("Philosopher " + this.id + " releases the left chopstick");
             }
           }
+          if(thinkCount == 0){--thinkCount;}  // if numCycles = 0, run infinitely
         }
       }
       else
