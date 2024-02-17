@@ -5,9 +5,10 @@ class Philosopher extends Thread {
   private Random random;
   private int thinkCount;
   private int numCycles;
-  private int thinkingTime;
-  private int eatingTime; // Max eating time
-  private int currentEatingTime;  // Current eating time
+  private int thinkingTime;         // Max thinking time
+  private int currentThinkingTime;  // Current thinking time
+  private int eatingTime;           // Max eating time
+  private int currentEatingTime;    // Current eating time
   private int handChoice;
   private int id;
 
@@ -29,15 +30,19 @@ class Philosopher extends Thread {
         {
           ++thinkCount;
           if (thinkCount % 10 == 0)
+          {
             System.out.println("Philosopher " + this.id + " has thought " + thinkCount + " times");
-          Thread.sleep(random.nextInt(thinkingTime));   // Think for a while
+          }
+          currentThinkingTime = random.nextInt(thinkingTime);
+          Thread.sleep(random.nextInt(currentThinkingTime));   // Think for a while
+          System.out.println("Philosopher " + this.id + " thinks for " + currentThinkingTime + " ms");
           synchronized(this.right) 
           {                    // Grab right chopstick 
             System.out.println("Philosopher " + this.id + "has the right chopstick");
             synchronized(this.left) 
             {                   // Grab left chopstick 
               System.out.println("Philosopher " + this.id + "wants the left chopstick");
-              this.currentEatingTime = random.nextInt(eatingTime);
+              currentEatingTime = random.nextInt(eatingTime);
               Thread.sleep(currentEatingTime); // Eat for a while
               System.out.println("Philosopher " + this.id + " eats for " + currentEatingTime + "ms");
               System.out.println("Philosopher " + this.id + " releases the left chopstick");
@@ -52,8 +57,12 @@ class Philosopher extends Thread {
         {
           ++thinkCount;
           if (thinkCount % 10 == 0)
+          {
             System.out.println("Philosopher " + this.id + " has thought " + thinkCount + " times");
-          Thread.sleep(random.nextInt(thinkingTime));     // Think for a while
+          }
+          currentThinkingTime = random.nextInt(thinkingTime);
+          Thread.sleep(random.nextInt(currentThinkingTime));   // Think for a while
+          System.out.println("Philosopher " + this.id + " thinks for " + currentThinkingTime + " ms");
           if (this.id % 2 == 0) 
           {
             synchronized(right)   // Grab right chopstick  
@@ -63,7 +72,7 @@ class Philosopher extends Thread {
               synchronized(left)  // Grab left chopstick 
               {                        
                 System.out.println("Philosopher " + this.id + " has the left chopstick");
-                this.currentEatingTime = random.nextInt(eatingTime);
+                currentEatingTime = random.nextInt(eatingTime);
                 Thread.sleep(currentEatingTime); // Eat for a while
                 System.out.println("Philosopher " + this.id + " eats for " + currentEatingTime + "ms");
                 System.out.println("Philosopher " + this.id + " releases the left chopstick");
@@ -80,7 +89,7 @@ class Philosopher extends Thread {
               synchronized(right) // Grab right chopstick 
               {                       
                 System.out.println("Philosopher " + this.id + " has the right chopstick");
-                this.currentEatingTime = random.nextInt(eatingTime);
+                currentEatingTime = random.nextInt(eatingTime);
                 Thread.sleep(currentEatingTime); // Eat for a while
                 System.out.println("Philosopher " + this.id + " eats for " + currentEatingTime + "ms");
                 System.out.println("Philosopher " + this.id + " releases the right chopstick");
