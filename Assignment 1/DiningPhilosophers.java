@@ -1,6 +1,7 @@
 public class DiningPhilosophers {
 
-  public static void main(String[] args) throws InterruptedException {
+  public static void main(String[] args) throws InterruptedException 
+  {
     int np = Integer.parseInt(args[0]); // number of philosophers/chopsticks
     int nc = Integer.parseInt(args[1]); // number of cycles that each philosopher will go through
     int tt = Integer.parseInt(args[2]); // maximum thinking time duration (ms)
